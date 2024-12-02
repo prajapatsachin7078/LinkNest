@@ -4,9 +4,11 @@ dotenv.config();
 const contentTypes = ['image', 'video', 'article', 'audio']; // Extend as needed
 const DB_URI = process.env.MONGO_URI;
 
+// Type checking if uri is undefined
 if (!DB_URI) {
     throw new Error("MONGO_URI is not defined in the environment variables");
 }
+// Getting DB connection 
 export const getDBConnection = async () => {
     try {
         await mongoose.connect(DB_URI);
