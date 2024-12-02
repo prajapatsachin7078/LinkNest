@@ -3,13 +3,18 @@ import dotenv from 'dotenv';
 dotenv.config();
 const contentTypes = ['image', 'video', 'article', 'audio']; // Extend as needed
 const DB_URI = process.env.MONGO_URI;
-export const getDBConnection = async()=>{
-   try {
-       await mongoose.connect(`${DB_URI}`)
-   } catch (error) {
-    console.log("Error while connected with db...")
-   }
+
+if (!DB_URI) {
+    throw new Error("MONGO_URI is not defined in the environment variables");
 }
+export const getDBConnection = async () => {
+    try {
+        await mongoose.connect(DB_URI);
+        console.log("Database connected successfully");
+    } catch (error) {
+        console.error("Error while connecting with DB:", error);
+    }
+};
 
 const userSchema = new mongoose.Schema({
     name: {
