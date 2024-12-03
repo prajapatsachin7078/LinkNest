@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
-import { getDBConnection, UserModel } from './db';
+import { ContentModel, getDBConnection, TagModel, UserModel } from './db';
 import { z } from 'zod';
 import { authMiddleware } from './middleware';
 dotenv.config();
@@ -13,6 +13,12 @@ const secretKey = process.env.SECRET_KEY;
 if (!secretKey) {
     throw new Error("SECRET_KEY is not available!");
 }
+
+interface AppError extends Error {
+    status?: number;
+    isOperational?: boolean;
+}
+
 // zod validation schema to validate signup credentials
 const userSignUpSchema = z.object({
     name: z.string().min(1, { message: "Name is required." }),
@@ -83,23 +89,54 @@ app.post('/api/v1/login', async (req: Request, res: Response) => {
     }
 });
 
-app.post('/api/v1/content',authMiddleware, (req:Request, res:Response) => {
-    const {title,link,type,tag,userId} = req.body;
-    console.log(userId)
+app.post('/api/v1/content', authMiddleware, async (req: Request, res: Response) => {
+    const { title, link, type, tags, userId } = req.body;
+    console.log(title)
     try {
-        
+        await ContentModel.create({ title, link, type, userId });
+        res.json({
+            message: "Content added successfully!"
+        });
     } catch (error) {
-        
+        res.status(500).json({
+            message: "Internal Server error"
+        })
+        console.error(error);
     }
-    res.send("Added suc");
-})
-
-app.get('/api/v1/content', (req, res) => {
 
 })
-app.delete('/api/v1/content', (req, res) => {
 
+app.get('/api/v1/content', authMiddleware, async (req, res) => {
+    const { userId } = req.body;
+    try {
+        const content = await ContentModel.find({ userId })
+            .populate('userId', 'name email')
+        res.json({
+            content
+        })
+    } catch (error) {
+        res.json({
+            error
+        })
+    }
 })
+app.delete('/api/v1/content/:id', async (req, res) => {
+    try {
+        const contentId = req.params.id;
+        const deletedContent = await ContentModel.findByIdAndDelete(contentId);
+        if (!deletedContent) {
+            const error: AppError = new Error("No such content available!");
+            error.status = 404;
+            throw error;
+        }
+
+        res.status(200).json({ message: "Content deleted successfully!" });
+    } catch (error) {
+        const err = error as AppError; // Type assertion
+        res.status(err.status || 500).json({ error: err.message || "An unexpected error occurred." });
+    }
+});
+
 app.get('/api/v1/share', (req, res) => {
 
 })

@@ -13,7 +13,7 @@ interface CustomJWTPayload {
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
     const authorization = req.headers.authorization;
-    console.log(authorization);
+    // console.log(authorization);
     try {
         if (!authorization) {
             throw new Error("Not logged in! Log in first");
