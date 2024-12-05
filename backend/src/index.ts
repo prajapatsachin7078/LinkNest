@@ -89,6 +89,7 @@ app.post('/api/v1/login', async (req: Request, res: Response) => {
     }
 });
 
+// Route for added content
 app.post('/api/v1/content', authMiddleware, async (req: Request, res: Response) => {
     const { title, link, type, tags, userId } = req.body;
     console.log(title)
@@ -106,6 +107,7 @@ app.post('/api/v1/content', authMiddleware, async (req: Request, res: Response) 
 
 })
 
+// Route for fetching content
 app.get('/api/v1/content', authMiddleware, async (req, res) => {
     const { userId } = req.body;
     try {
@@ -120,6 +122,7 @@ app.get('/api/v1/content', authMiddleware, async (req, res) => {
         })
     }
 })
+// Route to delete content
 app.delete('/api/v1/content/:id', async (req, res) => {
     try {
         const contentId = req.params.id;
@@ -137,6 +140,7 @@ app.delete('/api/v1/content/:id', async (req, res) => {
     }
 });
 
+// Route to create sharable link
 app.get('/api/v1/share', (req, res) => {
 
 })
