@@ -147,9 +147,10 @@ app.post('/api/v1/brain/share',authMiddleware, async (req: Request, res: Respons
 
     // Validate input
     if (!userId) {
-        return res.status(400).json({
+        res.status(400).json({
             message: "User ID is required.",
         });
+        return;
     }
 
     try {
@@ -159,17 +160,18 @@ app.post('/api/v1/brain/share',authMiddleware, async (req: Request, res: Respons
 
             if (link) {
                 // If a link already exists, return it
-                return res.json({
+                res.json({
                     message: "Link already exists.",
                     hash: link.hash,
                 });
+                return;
             }
 
             // If no link exists, create a new one
             const hash = random(15); // Generate a random 15-character string
             link = await LinkModel.create({ hash, userId });
 
-            return res.json({
+            res.json({
                 message: "New link generated successfully.",
                 hash: link.hash,
             });
@@ -178,25 +180,49 @@ app.post('/api/v1/brain/share',authMiddleware, async (req: Request, res: Respons
             const deletedLink = await LinkModel.findOneAndDelete({ userId });
 
             if (deletedLink) {
-                return res.json({
+                 res.json({
                     message: "Link deleted successfully.",
                 });
+                return;
             }
 
-            return res.status(404).json({
+            res.status(404).json({
                 message: "No link found to delete.",
             });
         }
     } catch (error) {
         console.error("Error while processing link:", error);
-        return res.status(500).json({
+        res.status(500).json({
             message: "An error occurred while processing your request.",
         });
     }
 });
 
-app.get('/api/v1/brain/:shareLink', async (req, res) => {
-    
+app.get('/api/v1/brain/:shareLink', async (req: Request, res: Response) => {
+    const {shareLink} = req.params;
+    // console.log(shareLink);
+    try {
+        const link = await LinkModel.findOne({hash:shareLink});
+        // console.log(link);
+        if(!link){
+            res.json({
+                message:"Not valid link!"
+            })
+            return;
+        }
+        const content = await ContentModel.find({
+            userId:link.userId
+        }).populate('userId','name');
+        res.json({
+            message:"",
+            content
+        })
+    } catch (error) {
+        console.error("Error while processing link:", error);
+        res.status(500).json({
+            message: "An error occurred while processing your request.",
+        });
+    }
 })
 
 
