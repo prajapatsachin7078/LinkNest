@@ -3,9 +3,10 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
-import { ContentModel, getDBConnection, TagModel, UserModel } from './db';
+import { ContentModel, getDBConnection, LinkModel, TagModel, UserModel } from './db';
 import { z } from 'zod';
 import { authMiddleware } from './middleware';
+import { random } from '../util/random';
 dotenv.config();
 const port = process.env.PORT;
 // get the secret key
@@ -141,8 +142,61 @@ app.delete('/api/v1/content/:id', async (req, res) => {
 });
 
 // Route to create sharable link
-app.get('/api/v1/share', (req, res) => {
+app.post('/api/v1/brain/share',authMiddleware, async (req: Request, res: Response) => {
+    const { share, userId } = req.body;
 
+    // Validate input
+    if (!userId) {
+        return res.status(400).json({
+            message: "User ID is required.",
+        });
+    }
+
+    try {
+        if (share) {
+            // Check if a link already exists for the user
+            let link = await LinkModel.findOne({ userId });
+
+            if (link) {
+                // If a link already exists, return it
+                return res.json({
+                    message: "Link already exists.",
+                    hash: link.hash,
+                });
+            }
+
+            // If no link exists, create a new one
+            const hash = random(15); // Generate a random 15-character string
+            link = await LinkModel.create({ hash, userId });
+
+            return res.json({
+                message: "New link generated successfully.",
+                hash: link.hash,
+            });
+        } else {
+            // If share is false, delete the link
+            const deletedLink = await LinkModel.findOneAndDelete({ userId });
+
+            if (deletedLink) {
+                return res.json({
+                    message: "Link deleted successfully.",
+                });
+            }
+
+            return res.status(404).json({
+                message: "No link found to delete.",
+            });
+        }
+    } catch (error) {
+        console.error("Error while processing link:", error);
+        return res.status(500).json({
+            message: "An error occurred while processing your request.",
+        });
+    }
+});
+
+app.get('/api/v1/brain/:shareLink', async (req, res) => {
+    
 })
 
 
