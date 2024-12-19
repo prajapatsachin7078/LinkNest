@@ -17,8 +17,8 @@ const buttonSizes={
 
 
 const buttonVariants = {
-    'primary':"bg-blue-200 border rounded-md hover:bg-blue-300 hover:text-white active:scale-105 transition-transform",
-  'secondary':"text-white bg-violet-600 border rounded-md hover:bg-violet-400 hover:text-black active:scale-105 transition-transform "
+    'primary':"bg-blue-400  rounded-md hover:bg-blue-300 text-white  active:scale-105 transition-transform",
+  'secondary':"text-white bg-violet-600  rounded-md hover:bg-violet-500  active:scale-105 transition-transform "
 }
 
 function Button(props:ButtonProps) {

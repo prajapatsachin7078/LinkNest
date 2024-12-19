@@ -42,12 +42,13 @@ export const Card = (props: CardTypes) => {
             <div className="w-full">
                 {type === 'youtube'
                     && <iframe
-                        className="w-full rounded-lg mb-6" height={260}
+                        className="w-full rounded-lg " height={285}
                         src={`https://www.youtube.com/embed/${extractYouTubeID(link)}`} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe> ||
 
-                    type === 'twitter' && <div className="max-h-72 rounded-lg -translate-y-6 object-fill  overflow-y-hidden">
-                    <Tweet id={`${extractTweetId(link)}`} />
+                    type === 'twitter' && <div className="max-h-72 rounded-lg -translate-y-6  overflow-y-hidden">
+                        <Tweet id={`${extractTweetId(link)}`} />
                     </div>
+
                     // {`${extractTweetId(link)}`}
                 }
             </div>
