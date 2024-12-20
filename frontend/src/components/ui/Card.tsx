@@ -1,5 +1,7 @@
-import { Delete02Icon, File02Icon, Link06Icon, XVariableSquareIcon, YoutubeIcon } from "hugeicons-react";
+import { Delete02Icon, File02Icon, Link06Icon } from "hugeicons-react";
 import {Tweet} from "react-tweet";
+import XSquareIconSvg from "../icons/XSquareIconSvg";
+import YouTubeIconSvg from "../icons/YouTubeIconSvg";
 
 interface CardTypes {
     title: string,
@@ -29,7 +31,7 @@ export const Card = (props: CardTypes) => {
         <div className=" hover:scale-105 transition-transform border-2 mx-2 rounded-md max-w-72  px-4 py-2">
             {/* // Card Header */}
             <div className="flex items-center  justify-between m-2 border-b-2 pb-1"><span className="hover:cursor-pointer">
-                {type === 'twitter' && <XVariableSquareIcon size={32} /> || type === 'youtube' && <YoutubeIcon size = {32} color="red" /> || <File02Icon />}
+                {type === 'twitter' && <XSquareIconSvg /> || type === 'youtube' && <YouTubeIconSvg /> || <File02Icon />}
             </span>
 
                 <h4 className="mx-2 font-bold">{title}</h4>

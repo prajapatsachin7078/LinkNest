@@ -1,11 +1,12 @@
 
-import { Share2Icon, XIcon, XSquareIcon } from 'lucide-react'
 import './App.css'
 import Button from './components/ui/Button'
 import { Card } from './components/ui/Card'
-import { Add01Icon, Doc01Icon, Link06Icon, LogoutSquare01Icon, Tag01Icon, YoutubeIcon } from 'hugeicons-react';
-import XSquareIconSvg from './components/ui/icons/XSquareIconSvg';
-import XIconSvg from './components/ui/icons/XIconSvg';
+import { Add01Icon, Doc01Icon, Link06Icon, LogoutSquare01Icon, Share02Icon, Tag01Icon } from 'hugeicons-react';
+import XSquareIconSvg from './components/icons/XSquareIconSvg';
+import XIconSvg from './components/icons/XIconSvg';
+import YouTubeIconSvg from './components/icons/YouTubeIconSvg';
+import RedHatIcon from './components/icons/RedHatIcon';
 function App() {
   const tags: string[] = ["chat", "messaging", "real-time", "GiggleChat", "notifications"];
 
@@ -17,9 +18,20 @@ function App() {
     <div className="flex h-screen">
       {/* Left sidebar */}
       <div className="border-r-2 w-72 z-20 fixed flex flex-col text-center top-0 left-0 h-screen bg-white">
-        <div className="text-3xl mt-6">
-          <h1>LinkNest</h1>
-        </div>
+        <div className="text-3xl mt-6  ">
+          
+          <span className="relative flex items-center  justify-center animate-fade-in">
+            {/* Brain */}
+            <span className="relative text-blue-500 font-bold text-4xl">
+              <span className="absolute -top-2  animate-bounce">
+                <RedHatIcon />
+              </span>
+              Smart
+            </span>
+            {/* Dock */}
+            <span className="text-orange-500 font-bold text-4xl">Stack</span>
+          </span>
+       </div>
         <div className="flex flex-col justify-center items-center mt-10">
           <ul className="space-y-4">
             <li className="flex items-center space-x-3">
@@ -27,7 +39,7 @@ function App() {
               <span><XIconSvg/></span>
             </li> 
             <li className="flex items-center space-x-3">
-              <YoutubeIcon />
+              <YouTubeIconSvg />
               <span>YouTube</span>
             </li>
             <li className="flex items-center space-x-3">
@@ -54,7 +66,7 @@ function App() {
         {/* Header */}
         <div className="flex w-full justify-end border-b-2 z-10 gap-2  fixed right-0  bg-white top-0">
           <div className="flex gap-4  my-2 justify-end mr-4">
-            <Button handleClick={handleClick} variant="primary" text="Share Brain" startIcon={<Share2Icon size={18} />} size="sm" />
+            <Button handleClick={handleClick} variant="primary" text="Share Brain" startIcon={<Share02Icon size={18} />} size="sm" />
             <Button handleClick={handleClick} variant="secondary" text="Add Content" startIcon={<Add01Icon size={18} />} size="sm" />
           </div>
         </div>
