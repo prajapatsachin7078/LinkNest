@@ -1,7 +1,9 @@
 import { MultiplicationSignIcon, PlusSignIcon } from "hugeicons-react";
-import Input from "./Input";
+
 import { useEffect, useRef, useState } from "react";
-import Button from "./Button";
+import Input from "./ui/Input";
+import Button from "./ui/Button";
+
 
 // Define the type for the content 
 interface ContentTypes{

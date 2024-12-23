@@ -6,8 +6,8 @@ import XSquareIconSvg from './components/icons/XSquareIconSvg';
 import XIconSvg from './components/icons/XIconSvg';
 import YouTubeIconSvg from './components/icons/YouTubeIconSvg';
 import RedHatIcon from './components/icons/RedHatIcon';
-import { useEffect, useState } from 'react';
-import CreateLinkModal from './components/ui/CreateLinkModal';
+import { useState } from 'react';
+import CreateLinkModal from './components/CreateLinkModal';
 
 const tags: string[] = ["chat", "messaging", "real-time", "GiggleChat", "notifications"];
 // Define an array of objects to store card information
@@ -64,12 +64,6 @@ function App() {
     setLinks((links) => [content, ...links])
   }
 
-  // useEffect(()=>{
-  //   return ()=>{
-  //     console.log(links);
-  //   }
-  // },[links,modalOpen])
-
 
   return (
     <div className="h-screen">
@@ -102,23 +96,23 @@ function App() {
         <div className="border-r-2 min-w-52 w-96 pt-10 flex flex-col text-center h-screen bg-white">
           <div className="flex flex-col justify-center items-center mt-10">
             <ul className="space-y-4">
-              <li className="flex items-center space-x-3">
+              <li className="flex items-center space-x-3 hover:bg-slate-300 ps-2 py-2 rounded-md hover:cursor-pointer">
                 <XSquareIconSvg />
                 <span><XIconSvg /></span>
               </li>
-              <li className="flex items-center space-x-3">
+              <li className="flex items-center space-x-3 hover:bg-slate-300 ps-2 py-2 rounded-md hover:cursor-pointer">
                 <YouTubeIconSvg />
                 <span>YouTube</span>
               </li>
-              <li className="flex items-center space-x-3">
+              <li className="flex items-center space-x-3 hover:bg-slate-300 ps-2 py-2 rounded-md hover:cursor-pointer">
                 <Doc01Icon />
                 <span>Documents</span>
               </li>
-              <li className="flex items-center space-x-3">
+              <li className="flex items-center space-x-3 hover:bg-slate-300 ps-2 py-2 rounded-md hover:cursor-pointer">
                 <Link06Icon />
                 <span>Links</span>
               </li>
-              <li className="flex items-center space-x-3">
+              <li className="flex items-center space-x-3 hover:bg-slate-300 ps-2 py-2 rounded-md hover:cursor-pointer">
                 <Tag01Icon />
                 <span>Tags</span>
               </li>
